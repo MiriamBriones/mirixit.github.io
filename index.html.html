@@ -1,0 +1,1051 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrera de Amor de Hot Wheels ❤️🏎️</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+ --red:#ff1744;
+ --pink:#ff4f9a;
+ --blue:#19bfff;
+ --dark:#080912;
+ --white:#fff
+}
+
+body{
+ font-family:Arial,Helvetica,sans-serif;
+ background:var(--dark);
+ color:white;
+ overflow:hidden
+}
+
+.screen{
+ position:absolute;
+ inset:0;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:24px;
+ overflow:auto
+}
+
+.screen.active{display:flex}
+
+.bg{
+ position:absolute;
+ inset:0;
+ background:
+ radial-gradient(circle at 20% 20%,rgba(255,23,68,.25),transparent 25%),
+ radial-gradient(circle at 80% 70%,rgba(25,191,255,.18),transparent 25%),
+ linear-gradient(135deg,#070812,#15162a 50%,#080912)
+}
+
+.content{
+ position:relative;
+ z-index:3;
+ width:min(1000px,96vw);
+ text-align:center
+}
+
+.logo{
+ font-weight:1000;
+ font-style:italic;
+ font-size:clamp(2.4rem,8vw,6.5rem);
+ line-height:.85;
+ text-transform:uppercase;
+ text-shadow:5px 5px 0 #111,0 0 25px rgba(255,23,68,.8)
+}
+
+.logo span{color:var(--red)}
+
+.subtitle{
+ margin:25px auto 35px;
+ color:#ddd;
+ font-size:clamp(1rem,2.5vw,1.35rem)
+}
+
+button{
+ border:0;
+ border-radius:14px;
+ padding:15px 28px;
+ background:linear-gradient(135deg,#ff1744,#ff5b8d);
+ color:white;
+ font-weight:900;
+ font-size:1rem;
+ cursor:pointer;
+ box-shadow:0 8px 25px rgba(255,23,68,.35);
+ transition:.2s
+}
+
+button:hover{
+ transform:translateY(-3px) scale(1.03);
+ filter:brightness(1.1)
+}
+
+button.secondary{
+ background:linear-gradient(135deg,#128bd7,#19c8ff)
+}
+
+.small{
+ font-size:.82rem;
+ color:#aaa;
+ margin-top:16px
+}
+
+.track{
+ position:relative;
+ height:230px;
+ margin:30px auto;
+ border:5px solid #444;
+ border-radius:30px;
+ background:#202127;
+ box-shadow:inset 0 0 0 8px #111;
+ overflow:hidden
+}
+
+.track:before,.track:after{
+ content:"";
+ position:absolute;
+ left:0;
+ right:0;
+ height:7px;
+ background:repeating-linear-gradient(
+  90deg,
+  #fff 0 35px,
+  #111 35px 70px
+ )
+}
+
+.track:before{top:18px}
+.track:after{bottom:18px}
+
+.roadline{
+ position:absolute;
+ top:50%;
+ left:0;
+ right:0;
+ border-top:6px dashed #f5f5f5;
+ opacity:.8
+}
+
+.car{
+ position:absolute;
+ left:5%;
+ top:calc(50% - 33px);
+ font-size:4rem;
+ filter:drop-shadow(0 8px 8px #000);
+ z-index:4;
+ transition:left 3s cubic-bezier(.15,.75,.2,1)
+}
+
+.car.go{left:86%}
+
+.speed{
+ animation:bounce .18s infinite alternate
+}
+
+@keyframes bounce{
+ to{
+  transform:translateY(-4px) rotate(-1deg)
+ }
+}
+
+.startline{
+ position:absolute;
+ right:5%;
+ top:0;
+ bottom:0;
+ width:8px;
+ background:repeating-linear-gradient(
+  0deg,
+  #fff 0 15px,
+  #111 15px 30px
+ )
+}
+
+.cards{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:18px;
+ margin:25px 0
+}
+
+.card{
+ padding:24px;
+ border:1px solid #333;
+ border-radius:20px;
+ background:rgba(255,255,255,.07);
+ backdrop-filter:blur(8px);
+ min-height:150px;
+ display:flex;
+ flex-direction:column;
+ justify-content:center
+}
+
+.card b{
+ font-size:1.1rem;
+ color:#ff6d9e
+}
+
+.card p{
+ margin-top:10px;
+ color:#ddd;
+ line-height:1.5
+}
+
+.badge{
+ display:inline-block;
+ padding:8px 15px;
+ border-radius:99px;
+ background:#151a29;
+ border:1px solid #333;
+ color:#aaa;
+ margin:5px
+}
+
+.trophy{
+ font-size:6rem;
+ animation:float 1.5s infinite alternate
+}
+
+.big{
+ font-size:clamp(2rem,6vw,5rem);
+ font-weight:1000;
+ font-style:italic;
+ text-shadow:4px 4px #111
+}
+
+@keyframes float{
+ to{
+  transform:translateY(-12px) rotate(4deg)
+ }
+}
+
+.box-area{
+ height:310px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ position:relative
+}
+
+.box{
+ width:280px;
+ height:190px;
+ background:linear-gradient(#ef1740,#9d0824);
+ border:7px solid #ff5574;
+ border-radius:12px;
+ position:relative;
+ box-shadow:0 20px 40px #000;
+ transition:1s;
+ cursor:pointer
+}
+
+.box:before{
+ content:"HOT WHEELS";
+ position:absolute;
+ left:20px;
+ right:20px;
+ top:62px;
+ background:#111;
+ color:white;
+ font-size:1.6rem;
+ font-weight:1000;
+ font-style:italic;
+ padding:12px;
+ transform:skew(-12deg)
+}
+
+.box:after{
+ content:"❤️";
+ position:absolute;
+ right:-20px;
+ bottom:-20px;
+ font-size:3rem
+}
+
+.lid{
+ position:absolute;
+ left:-7px;
+ right:-7px;
+ top:-35px;
+ height:45px;
+ background:#ff3155;
+ border:7px solid #ff5574;
+ border-radius:12px 12px 4px 4px;
+ transform-origin:bottom;
+ transition:1s
+}
+
+.box.open{
+ transform:translateY(40px) scale(.9);
+ opacity:.4
+}
+
+.box.open .lid{
+ transform:rotateX(150deg) translateY(-20px)
+}
+
+.letter{
+ max-width:700px;
+ margin:auto;
+ background:#fff7f9;
+ color:#35131f;
+ border-radius:18px;
+ padding:35px;
+ text-align:left;
+ box-shadow:0 20px 60px #000;
+ line-height:1.8;
+ position:relative
+}
+
+.letter h2{
+ text-align:center;
+ color:#d51645;
+ margin-bottom:18px
+}
+
+.letter p{
+ margin:12px 0
+}
+
+.signature{
+ text-align:right;
+ font-weight:bold;
+ color:#d51645
+}
+
+.counter{
+ display:flex;
+ justify-content:center;
+ gap:10px;
+ flex-wrap:wrap;
+ margin:20px 0
+}
+
+.count{
+ background:#151725;
+ border:1px solid #333;
+ border-radius:14px;
+ padding:13px 17px;
+ min-width:90px
+}
+
+.count strong{
+ display:block;
+ font-size:1.6rem;
+ color:#ff527d
+}
+
+.count span{
+ font-size:.75rem;
+ color:#aaa
+}
+
+.hearts{
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ z-index:10;
+ overflow:hidden
+}
+
+.heart{
+ position:absolute;
+ bottom:-40px;
+ font-size:24px;
+ animation:rise 4s linear forwards
+}
+
+@keyframes rise{
+ to{
+  transform:translateY(-110vh) rotate(360deg);
+  opacity:0
+ }
+}
+
+.final{
+ background:
+ radial-gradient(
+  circle at center,
+  rgba(255,23,68,.28),
+  transparent 45%
+ ),
+ #070812
+}
+
+/* REPRODUCTOR DE MÚSICA */
+
+.music-player{
+ position:fixed;
+ right:18px;
+ bottom:18px;
+ z-index:50;
+ display:flex;
+ align-items:center;
+ gap:10px;
+ padding:10px 14px;
+ background:rgba(10,10,20,.88);
+ border:1px solid rgba(255,255,255,.15);
+ border-radius:18px;
+ backdrop-filter:blur(10px);
+ box-shadow:0 10px 35px rgba(0,0,0,.45);
+ transition:.3s
+}
+
+.music-player:hover{
+ transform:translateY(-3px)
+}
+
+.music-btn{
+ width:42px;
+ height:42px;
+ padding:0;
+ border-radius:50%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:1.1rem;
+ background:linear-gradient(135deg,#ff1744,#ff4f9a)
+}
+
+.music-info{
+ text-align:left;
+ line-height:1.2
+}
+
+.music-title{
+ font-size:.82rem;
+ font-weight:bold
+}
+
+.music-artist{
+ font-size:.68rem;
+ color:#aaa;
+ margin-top:3px
+}
+
+.music-bars{
+ display:flex;
+ align-items:end;
+ gap:3px;
+ height:22px
+}
+
+.music-bars i{
+ width:3px;
+ height:8px;
+ background:#ff4f9a;
+ border-radius:5px;
+ animation:musicBars .6s infinite alternate
+}
+
+.music-bars i:nth-child(2){animation-delay:.1s}
+.music-bars i:nth-child(3){animation-delay:.2s}
+.music-bars i:nth-child(4){animation-delay:.3s}
+
+.music-player.paused .music-bars i{
+ animation-play-state:paused;
+ height:5px
+}
+
+@keyframes musicBars{
+ from{height:5px}
+ to{height:20px}
+}
+
+@media(max-width:700px){
+
+ .cards{
+  grid-template-columns:1fr
+ }
+
+ .track{
+  height:190px
+ }
+
+ .car{
+  font-size:3rem
+ }
+
+ .letter{
+  padding:24px
+ }
+
+ .box{
+  width:240px
+ }
+
+ .music-player{
+  right:10px;
+  bottom:10px;
+  padding:8px 10px
+ }
+
+ .music-info{
+  display:none
+ }
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<!-- MÚSICA -->
+<audio id="music" loop></audio>
+
+<div class="music-player paused" id="musicPlayer">
+ <button class="music-btn" id="musicBtn" onclick="toggleMusic()">▶</button>
+
+ <div class="music-info">
+  <div class="music-title">Love Story ❤️</div>
+  <div class="music-artist">Romantic Love Theme</div>
+ </div>
+
+ <div class="music-bars">
+  <i></i><i></i><i></i><i></i>
+ </div>
+</div>
+
+<section class="screen active" id="s1">
+ <div class="bg"></div>
+
+ <div class="content">
+
+  <div class="badge">🏁 EDICIÓN ESPECIAL • 08/01/2025</div>
+
+  <h1 class="logo">
+   Hot <span>Wheels</span><br>
+   Carrera de Amor
+  </h1>
+
+  <p class="subtitle">
+   Una pequeña carrera hecha especialmente para
+   <b>Sebastian</b> ❤️
+  </p>
+
+  <button onclick="startExperience()">
+   🏎️ ARRANCA EL MOTOR
+  </button>
+
+  <p class="small">
+   Preparado, piloto? Esta carrera tiene una sorpresa al final.
+  </p>
+
+ </div>
+</section>
+
+<section class="screen" id="s2">
+ <div class="bg"></div>
+
+ <div class="content">
+
+  <div class="badge">NIVEL 01 — LA CARRERA</div>
+
+  <h2 class="big">
+   ¡Arranca el motor! 🏎️💨
+  </h2>
+
+  <div class="track">
+   <div class="roadline"></div>
+   <div class="startline"></div>
+   <div class="car" id="car">🏎️</div>
+  </div>
+
+  <p id="raceText" class="subtitle">
+   Presiona el botón y lleva el carrito hasta la meta.
+  </p>
+
+  <button onclick="race()">
+   🔥 ACELERA
+  </button>
+
+ </div>
+</section>
+
+<section class="screen" id="s3">
+ <div class="bg"></div>
+
+ <div class="content">
+
+  <div class="badge">NIVEL 02 — NUESTRO VIAJE</div>
+
+  <h2 class="big">
+   Nuestra ruta ❤️
+  </h2>
+
+  <p class="subtitle">
+   Desde el <b>8 de enero de 2025</b>,
+   cada momento se convirtió en parte de nuestra historia.
+  </p>
+
+  <div class="cards">
+
+   <div class="card">
+    <b>🏁 INICIO</b>
+    <p>
+     El día que comenzó nuestra historia:
+     08/01/2025.
+    </p>
+   </div>
+
+   <div class="card">
+    <b>💬 CADA MOMENTO</b>
+    <p>
+     Conversaciones, risas y pequeños momentos
+     que hacen especial nuestro camino.
+    </p>
+   </div>
+
+   <div class="card">
+    <b>❤️ HOY</b>
+    <p>
+     Y seguimos sumando recuerdos juntos,
+     kilómetro a kilómetro.
+    </p>
+   </div>
+
+  </div>
+
+  <button onclick="go(4)">
+   🏆 LLEGAR A LA META
+  </button>
+
+ </div>
+</section>
+
+<section class="screen" id="s4">
+ <div class="bg"></div>
+
+ <div class="content">
+
+  <div class="badge">LÍNEA DE META</div>
+
+  <div class="trophy">🏆</div>
+
+  <h1 class="big">
+   ERES MI<br>
+   <span style="color:#ff4169">
+    PILOTO FAVORITO
+   </span>
+  </h1>
+
+  <p class="subtitle">
+   ¡Llegaste a la meta, Sebastian!
+   Pero la carrera todavía tiene una última sorpresa... 👀
+  </p>
+
+  <button onclick="go(5)">
+   🎁 RECLAMA TU SORPRESA
+  </button>
+
+ </div>
+</section>
+
+<section class="screen" id="s5">
+ <div class="bg"></div>
+
+ <div class="content">
+
+  <div class="badge">
+   NIVEL EXTRA — GARAJE SECRETO
+  </div>
+
+  <h2 class="big">
+   Tu Hot Wheels especial 🎁
+  </h2>
+
+  <p class="subtitle">
+   Haz clic en la caja para abrirla.
+  </p>
+
+  <div class="box-area">
+
+   <div
+    class="box"
+    id="box"
+    onclick="openBox()"
+   >
+    <div class="lid"></div>
+   </div>
+
+  </div>
+
+  <div id="boxMsg" style="display:none">
+
+   <p class="subtitle">
+    💗 Sorpresa desbloqueada.
+   </p>
+
+   <button onclick="go(6)">
+    💌 LEE TU MENSAJE
+   </button>
+
+  </div>
+
+ </div>
+</section>
+
+<section class="screen" id="s6">
+ <div class="bg"></div>
+
+ <div class="content">
+
+  <div class="badge">
+   NIVEL FINAL — UNA CARTA PARA TI
+  </div>
+
+  <div class="letter">
+
+   <h2>
+    💌 Para Sebastian
+   </h2>
+
+   <p>
+    Si llegaste hasta aquí, significa que terminaste
+    nuestra pequeña carrera. 🏎️❤️
+   </p>
+
+   <p>
+    Quería hacerte algo diferente, algo que pudiera
+    guardar un poquito de todo el cariño que te tengo.
+    Tal vez sea una página hecha con código, pero cada
+    detalle está pensado especialmente para ti.
+   </p>
+
+   <p>
+    Desde aquel <b>8 de enero de 2025</b>, hemos ido
+    construyendo nuestra propia ruta, con momentos
+    bonitos, risas, conversaciones y también días
+    difíciles. Y aun así, cada parte de nuestra historia
+    tiene un lugar especial para mí.
+   </p>
+
+   <p>
+    Espero que cuando veas esto recuerdes que hay
+    alguien que piensa en ti y que quiso regalarte
+    un pequeño momento diferente. ❤️
+   </p>
+
+   <p>
+    Gracias por compartir esta carrera conmigo.
+    No sé qué curvas nos esperan, pero me gusta saber
+    que estamos escribiendo nuestra historia paso a paso.
+   </p>
+
+   <p class="signature">
+    Con mucho cariño,<br>
+    Miri 🎀
+   </p>
+
+  </div>
+
+  <button
+   style="margin-top:22px"
+   onclick="go(7)"
+  >
+   ❤️ VER NUESTRO TIEMPO
+  </button>
+
+ </div>
+</section>
+
+<section class="screen final" id="s7">
+
+ <div class="content">
+
+  <div class="badge">
+   CARRERA COMPLETA 🏁
+  </div>
+
+  <h1 class="logo">
+   MI FAVORITA<br>
+   <span>CARRERA</span>
+  </h1>
+
+  <p class="subtitle">
+   Nuestro contador desde el 08/01/2025
+  </p>
+
+  <div class="counter" id="counter"></div>
+
+  <h2 style="margin:25px 0;font-size:clamp(1.5rem,4vw,3rem)">
+   ❤️ Gracias por compartir esta carrera conmigo. ❤️
+  </h2>
+
+  <button onclick="restart()">
+   🏎️ HÁZLO OTRA VEZ
+  </button>
+
+ </div>
+</section>
+
+<script>
+
+const screens=[...document.querySelectorAll('.screen')];
+
+const music=document.getElementById('music');
+const musicBtn=document.getElementById('musicBtn');
+const musicPlayer=document.getElementById('musicPlayer');
+
+let musicStarted=false;
+let audioCtx=null;
+let musicTimer=null;
+let musicStep=0;
+let musicPhrase=0;
+
+function startLoveMusic(){
+ if(!audioCtx){
+  audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+ }
+ if(audioCtx.state==='suspended') audioCtx.resume();
+ if(musicTimer) return;
+
+ const notes=[261.63,329.63,392,523.25,493.88,392,329.63,293.66,261.63,349.23,440,587.33,523.25,440,349.23,329.63];
+ const chords=[[130.81,164.81,196],[146.83,185,220],[164.81,196,246.94],[174.61,220,261.63]];
+ musicStep=0;
+ musicTimer=setInterval(()=>{
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+  osc.type='sine';
+  osc.frequency.value=notes[musicStep%notes.length];
+  gain.gain.setValueAtTime(0.0001,audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.035,audioCtx.currentTime+0.08);
+  gain.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+0.95);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start();
+  osc.stop(audioCtx.currentTime+1);
+  if(musicStep%4===0){
+   chords[musicPhrase%chords.length].forEach((freq,j)=>{
+    const pad=audioCtx.createOscillator();
+    const padGain=audioCtx.createGain();
+    pad.type='triangle';
+    pad.frequency.value=freq;
+    padGain.gain.setValueAtTime(0.0001,audioCtx.currentTime);
+    padGain.gain.exponentialRampToValueAtTime(0.012,audioCtx.currentTime+0.15);
+    padGain.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+2.05);
+    pad.connect(padGain);
+    padGain.connect(audioCtx.destination);
+    pad.start();
+    pad.stop(audioCtx.currentTime+2.1);
+   });
+   musicPhrase++;
+  }
+  musicStep++;
+ },680);
+}
+
+function stopLoveMusic(){
+ if(musicTimer){
+  clearInterval(musicTimer);
+  musicTimer=null;
+ }
+}
+
+/* CAMBIAR DE PANTALLA */
+
+function go(n){
+
+ screens.forEach((s,i)=>{
+  s.classList.toggle('active',i===n-1);
+ });
+
+ hearts(8);
+}
+
+/* INICIAR EXPERIENCIA + MÚSICA */
+
+function startExperience(){
+
+ startLoveMusic();
+ musicStarted=true;
+ musicBtn.textContent='⏸';
+ musicPlayer.classList.remove('paused');
+
+ go(2);
+}
+
+/* PLAY / PAUSE */
+
+function toggleMusic(){
+
+ if(!musicStarted || !musicTimer){
+
+  startLoveMusic();
+  musicStarted=true;
+  musicBtn.textContent='⏸';
+  musicPlayer.classList.remove('paused');
+
+ }else{
+
+  stopLoveMusic();
+  musicBtn.textContent='▶';
+  musicPlayer.classList.add('paused');
+
+ }
+}
+
+/* CORAZONES */
+
+function hearts(n=12){
+
+ const wrap=document.getElementById('hearts');
+
+ for(let i=0;i<n;i++){
+
+  const h=document.createElement('div');
+
+  h.className='heart';
+
+  h.textContent=[
+   '❤️',
+   '💗',
+   '💕',
+   '💖'
+  ][Math.floor(Math.random()*4)];
+
+  h.style.left=Math.random()*100+'%';
+
+  h.style.animationDuration=
+   (3+Math.random()*3)+'s';
+
+  h.style.fontSize=
+   (16+Math.random()*24)+'px';
+
+  wrap.appendChild(h);
+
+  setTimeout(()=>{
+   h.remove();
+  },6500);
+ }
+}
+
+/* CARRERA */
+
+function race(){
+
+ const car=document.getElementById('car');
+ const text=document.getElementById('raceText');
+
+ car.classList.add('go','speed');
+
+ text.textContent=
+ '🏎️💨 ¡MÁXIMA VELOCIDAD! ¡Vamos, Sebastian!';
+
+ setTimeout(()=>{
+
+  car.classList.remove('speed');
+
+  text.textContent=
+   '🏁 ¡META! ¡Sebastian completó la carrera! ❤️';
+
+  hearts(20);
+
+ },3200);
+
+ setTimeout(()=>{
+  go(3);
+ },4700);
+}
+
+/* ABRIR CAJA */
+
+function openBox(){
+
+ const box=document.getElementById('box');
+
+ box.classList.add('open');
+
+ hearts(30);
+
+ setTimeout(()=>{
+
+  document.getElementById('boxMsg').style.display='block';
+
+ },900);
+}
+
+/* CONTADOR */
+
+function updateCounter(){
+
+ const start=new Date(2025,0,8);
+ const now=new Date();
+
+ const diff=now-start;
+
+ const days=Math.floor(
+  diff/86400000
+ );
+
+ const hours=Math.floor(
+  diff/3600000
+ )%24;
+
+ const mins=Math.floor(
+  diff/60000
+ )%60;
+
+ const secs=Math.floor(
+  diff/1000
+ )%60;
+
+ const totalMonths=
+  (now.getFullYear()-start.getFullYear())*12+
+  (now.getMonth()-start.getMonth())-
+  (now.getDate()<start.getDate()?1:0);
+
+ document.getElementById('counter').innerHTML=
+
+ `<div class="count">
+   <strong>${totalMonths}</strong>
+   <span>MESES</span>
+  </div>
+
+  <div class="count">
+   <strong>${days}</strong>
+   <span>DÍAS</span>
+  </div>
+
+  <div class="count">
+   <strong>${hours}</strong>
+   <span>HORAS</span>
+  </div>
+
+  <div class="count">
+   <strong>${mins}</strong>
+   <span>MINUTOS</span>
+  </div>
+
+  <div class="count">
+   <strong>${secs}</strong>
+   <span>SEGUNDOS</span>
+  </div>`;
+}
+
+setInterval(updateCounter,1000);
+
+updateCounter();
+
+/* REINICIAR */
+
+function restart(){
+
+ location.reload();
+
+}
+
+</script>
+
+</body>
+</html>
+
+```
